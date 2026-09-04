@@ -36,7 +36,7 @@ services:
       - "./:/var/www/html"
 
   certbot:
-    image: certbot/certbot
+    image: certbot/certbot:latest
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
@@ -47,6 +47,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 86400 certbot
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    ports:
+      - 9999:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
 
 
 volumes:
